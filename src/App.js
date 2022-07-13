@@ -1,7 +1,17 @@
-import logo from "./logo.svg";
+import { Routes, Route } from "react-router-dom";
+import { Products, Cart } from "./pages";
+import { Navbar } from "./components";
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <div className="flex flex-col justify-between bg-[#F1F3F6]">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Products />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
