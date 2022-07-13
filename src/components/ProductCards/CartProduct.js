@@ -5,9 +5,12 @@ import {
   decrementFromCart,
   removeFromCart,
   addToWishlist,
+  removeFromWishlist,
+  decrementFromWishlist,
+  incrementFromWishlist,
 } from "../../utils/productActions";
 
-export const CartProduct = ({ product }) => {
+export const CartProduct = ({ product, savedForLater }) => {
   const {
     id,
     title,
@@ -32,7 +35,11 @@ export const CartProduct = ({ product }) => {
         <div className="flex items-center py-2 gap-2">
           <FiMinusCircle
             size={20}
-            onClick={() => decrementFromCart(product, userCart, setUserCart)}
+            onClick={() => {
+              savedForLater
+                ? decrementFromWishlist(product, userWishlist, setUserWishlist)
+                : decrementFromCart(product, userCart, setUserCart);
+            }}
             className="cursor-pointer"
           />
           <div className="w-10 h-10 p-2 border-2 border-black text-center">
@@ -40,7 +47,11 @@ export const CartProduct = ({ product }) => {
           </div>
           <FiPlusCircle
             size={20}
-            onClick={() => addToCart(product, userCart, setUserCart)}
+            onClick={() => {
+              savedForLater
+                ? incrementFromWishlist(product, userWishlist, setUserWishlist)
+                : addToCart(product, userCart, setUserCart);
+            }}
             className="cursor-pointer"
           />
         </div>
@@ -55,23 +66,39 @@ export const CartProduct = ({ product }) => {
             <small className="ml-4 line-through">{`₹${originalPrice}`}</small>
           </div>
 
-          <small>{`Size: ${size.map((s) => s)}`}</small>
           <small>{gender}</small>
         </div>
 
         <div className="justify-self-end flex gap-4">
+          {savedForLater ? (
+            <button
+              className="font-semibold"
+              onClick={() => {
+                removeFromWishlist(product, userWishlist, setUserWishlist);
+                setUserCart(userCart.concat(product));
+              }}
+            >
+              MOVE TO CART
+            </button>
+          ) : (
+            <button
+              className="font-semibold"
+              onClick={() => {
+                addToWishlist(product, userWishlist, setUserWishlist);
+                removeFromCart(product, userCart, setUserCart);
+              }}
+            >
+              SAVE FOR LATER
+            </button>
+          )}
+
           <button
             className="font-semibold"
             onClick={() => {
-              addToWishlist(product, userWishlist, setUserWishlist);
-              removeFromCart(product, userCart, setUserCart);
+              savedForLater
+                ? removeFromWishlist(product, userWishlist, setUserWishlist)
+                : removeFromCart(product, userCart, setUserCart);
             }}
-          >
-            SAVE FOR LATER
-          </button>
-          <button
-            className="font-semibold"
-            onClick={() => removeFromCart(product, userCart, setUserCart)}
           >
             REMOVE
           </button>

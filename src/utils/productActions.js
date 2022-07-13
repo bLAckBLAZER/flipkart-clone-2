@@ -47,3 +47,35 @@ export const addToWishlist = (product, userWishlist, setUserWishlist) => {
     console.log("new wishlist: ", userWishlist.concat(product));
   }
 };
+
+export const removeFromWishlist = (product, userWishlist, setUserWishlist) => {
+  const updatedWishlist = userWishlist.filter((item) => item.id !== product.id);
+  setUserWishlist(updatedWishlist);
+};
+
+export const incrementFromWishlist = (
+  product,
+  userWishlist,
+  setUserWishlist
+) => {
+  const updatedWishlist = userWishlist.map((item) =>
+    item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+  );
+  setUserWishlist(updatedWishlist);
+};
+
+export const decrementFromWishlist = (
+  product,
+  userWishlist,
+  setUserWishlist
+) => {
+  if (product.qty === 1) {
+    // remove from wishlist
+    removeFromWishlist(product, userWishlist, setUserWishlist);
+  } else {
+    const updatedWishlist = userWishlist.map((item) =>
+      item.id === product.id ? { ...item, qty: item.qty - 1 } : item
+    );
+    setUserWishlist(updatedWishlist);
+  }
+};

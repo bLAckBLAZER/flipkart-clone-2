@@ -4,7 +4,7 @@ import { Navbar } from "./components";
 
 function App() {
   return (
-    <div className="flex flex-col justify-between bg-[#F1F3F6]">
+    <div className="min-h-screen flex flex-col justify-between bg-[#F1F3F6]">
       <Navbar />
       <Routes>
         <Route path="/" element={<Products />} />

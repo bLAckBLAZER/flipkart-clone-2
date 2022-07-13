@@ -1,7 +1,5 @@
 import { useData } from "../../context/DataContext";
 import { addToCart } from "../../utils/productActions";
-import { FiHeart } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export const ProductCard = ({ product }) => {
@@ -13,24 +11,14 @@ export const ProductCard = ({ product }) => {
     addToCart(product, userCart, setUserCart);
   };
 
-  const isPresentInWishlist = userWishlist.find(
-    (item) => item.id === product.id
-  );
   const isPresentInCart = userCart.find((item) => item.id === product.id);
 
   const navigate = useNavigate();
 
   return (
     <div className="flex flex-col justify-between border-2 border-black-600  max-w-175 bg-white">
-      <figure className="w-175 h-96 relative ">
+      <figure className="w-175 h-96 ">
         <img src={image} alt="" className="object-contain h-full" />
-        <i className="absolute top-4 right-4 cursor-pointer">
-          {isPresentInWishlist ? (
-            <FaHeart size={20} color="red" />
-          ) : (
-            <FiHeart size={20} />
-          )}
-        </i>
       </figure>
       <div className="p-2 flex flex-col">
         <h1>{brand}</h1>
